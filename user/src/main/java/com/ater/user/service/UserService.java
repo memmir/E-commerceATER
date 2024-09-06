@@ -1,5 +1,6 @@
 package com.ater.user.service;
 
+import com.ater.user.dto.CreateUserRequest;
 import com.ater.user.dto.UserDto;
 import com.ater.user.dto.UserDtoConverter;
 import com.ater.user.exception.UserNotFoundException;
@@ -28,5 +29,15 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow( () -> new UserNotFoundException("User could not be found by id:" + id));
 
         return userDtoConverter.convert(user);
+    }
+
+    public UserDto createUser(CreateUserRequest createUserRequest){
+        User user = new User(null,
+                createUserRequest.getMail(),
+                createUserRequest.getFirstName(),
+                createUserRequest.getLastName(),
+                createUserRequest.getMiddleName());
+
+        return userDtoConverter.convert(userRepository.save(user));
     }
 }
