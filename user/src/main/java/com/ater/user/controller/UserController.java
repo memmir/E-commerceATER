@@ -1,5 +1,7 @@
 package com.ater.user.controller;
 
+import com.ater.user.dto.CreateUserRequest;
+import com.ater.user.dto.UpdateUserRequest;
 import com.ater.user.model.User;
 import com.ater.user.service.UserService;
 import org.springframework.http.ResponseEntity;
