@@ -2,6 +2,7 @@ package com.ater.user.controller;
 
 import com.ater.user.dto.CreateUserRequest;
 import com.ater.user.dto.UpdateUserRequest;
+import com.ater.user.dto.UserDto;
 import com.ater.user.model.User;
 import com.ater.user.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -20,23 +21,25 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserDto>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") Long id) {
+    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @PostMapping // Post methodu response entity döneceği zaman 201 döner.
-    public ResponseEntity<User> createUser(@RequestBody CreateUserRequest userRequest) {
+    public ResponseEntity<UserDto> createUser(@RequestBody CreateUserRequest userRequest) {
         return ResponseEntity.ok(userService.createUser(userRequest));
     }
 
     @PutMapping("/{id}") // Put methodu response entity döneceği zaman 202 döner.
-    public ResponseEntity<User> updateUser(@RequestBody UpdateUserRequest updateUserRequest){
-        return ResponseEntity.ok(userService.updateUser(updateUserRequest));
+    public ResponseEntity<UserDto> updateUser(
+            @PathVariable Long id,
+            @RequestBody UpdateUserRequest updateUserRequest){
+        return ResponseEntity.ok(userService.updateUser(id, updateUserRequest));
     }
 
     @PatchMapping("/{id}")
