@@ -1,6 +1,7 @@
 package com.ater.user.service;
 
 import com.ater.user.dto.CreateUserRequest;
+import com.ater.user.dto.UpdateUserRequest;
 import com.ater.user.dto.UserDto;
 import com.ater.user.dto.UserDtoConverter;
 import com.ater.user.exception.UserNotFoundException;
@@ -26,7 +27,7 @@ public class UserService {
     }
 
     public UserDto getUserById(Long id){
-        User user = userRepository.findById(id).orElseThrow( () -> new UserNotFoundException("User could not be found by id:" + id));
+        User user = findUserById(id);
 
         return userDtoConverter.convert(user);
     }
@@ -39,5 +40,20 @@ public class UserService {
                 createUserRequest.getMiddleName());
 
         return userDtoConverter.convert(userRepository.save(user));
+    }
+
+    public UserDto updateUser(Long id, UpdateUserRequest updateUserRequest){
+        User user = findUserById(id);
+        User updateUser = new User(user.getId(),
+                user.getMail(),
+                updateUserRequest.getFirstName(),
+                updateUserRequest.getLastName(),
+                updateUserRequest.getMiddleName());
+
+        return userDtoConverter.convert(userRepository.save(updateUser));
+    }
+
+    private User findUserById(Long id){
+        return userRepository.findById(id).orElseThrow( () -> new UserNotFoundException("User could not be found by id:" + id));
     }
 }
