@@ -24,9 +24,9 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(userService.getUserById(id));
+    @GetMapping("/{mail}")
+    public ResponseEntity<UserDto> getUserByMail(@PathVariable String mail) {
+        return ResponseEntity.ok(userService.getUserByMail(mail));
     }
 
     @PostMapping // Post methodu response entity döneceği zaman 201 döner.
@@ -34,11 +34,11 @@ public class UserController {
         return ResponseEntity.ok(userService.createUser(userRequest));
     }
 
-    @PutMapping("/{id}") // Put methodu response entity döneceği zaman 202 döner.
+    @PutMapping("/{mail}") // Put methodu response entity döneceği zaman 202 döner.
     public ResponseEntity<UserDto> updateUser(
-            @PathVariable Long id,
+            @PathVariable String mail,
             @RequestBody UpdateUserRequest updateUserRequest){
-        return ResponseEntity.ok(userService.updateUser(id, updateUserRequest));
+        return ResponseEntity.ok(userService.updateUser(mail, updateUserRequest));
     }
 
 //    @PatchMapping("/{id}")

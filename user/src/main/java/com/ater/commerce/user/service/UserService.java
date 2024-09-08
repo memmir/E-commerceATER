@@ -5,8 +5,8 @@ import com.ater.commerce.user.dto.UpdateUserRequest;
 import com.ater.commerce.user.dto.UserDto;
 import com.ater.commerce.user.dto.UserDtoConverter;
 import com.ater.commerce.user.exception.UserNotFoundException;
-import com.ater.commerce.user.model.User;
-import com.ater.commerce.user.repository.UserRepository;
+import com.ater.commerce.user.model.UserInformation;
+import com.ater.commerce.user.repository.UserInformationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,46 +14,54 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-    private final UserRepository userRepository;
+    private final UserInformationRepository userInformationRepository;
     private final UserDtoConverter userDtoConverter;
 
-    public UserService(UserRepository userRepository, UserDtoConverter userDtoConverter) {
-        this.userRepository = userRepository;
+    public UserService(UserInformationRepository userInformationRepository, UserDtoConverter userDtoConverter) {
+        this.userInformationRepository = userInformationRepository;
         this.userDtoConverter = userDtoConverter;
     }
 
     public List<UserDto> getAllUsers(){
-        return userRepository.findAll().stream().map(x -> userDtoConverter.convert(x)).collect(Collectors.toList());
+        return userInformationRepository.findAll().stream().map(x -> userDtoConverter.convert(x)).collect(Collectors.toList());
     }
 
-    public UserDto getUserById(Long id){
-        User user = findUserById(id);
+    public UserDto getUserByMail(String mail){
+        UserInformation userInformation = findUserByMail(mail);
 
-        return userDtoConverter.convert(user);
+        return userDtoConverter.convert(userInformation);
     }
 
     public UserDto createUser(CreateUserRequest createUserRequest){
-        User user = new User(null,
+        UserInformation userInformation = new UserInformation(null,
                 createUserRequest.getMail(),
                 createUserRequest.getFirstName(),
                 createUserRequest.getLastName(),
                 createUserRequest.getMiddleName());
 
-        return userDtoConverter.convert(userRepository.save(user));
+        return userDtoConverter.convert(userInformationRepository.save(userInformation));
     }
 
-    public UserDto updateUser(Long id, UpdateUserRequest updateUserRequest){
-        User user = findUserById(id);
-        User updateUser = new User(user.getId(),
-                user.getMail(),
+    public UserDto updateUser(String mail, UpdateUserRequest updateUserRequest){
+        UserInformation userInformation = findUserByMail(mail);
+        UserInformation updateUser = new UserInformation(userInformation.getId(),
+                userInformation.getMail(),
                 updateUserRequest.getFirstName(),
                 updateUserRequest.getLastName(),
                 updateUserRequest.getMiddleName());
 
-        return userDtoConverter.convert(userRepository.save(updateUser));
+        return userDtoConverter.convert(userInformationRepository.save(updateUser));
     }
 
-    private User findUserById(Long id){
-        return userRepository.findById(id).orElseThrow( () -> new UserNotFoundException("User could not be found by id:" + id));
+    private UserInformation findUserById(Long id){
+        return userInformationRepository.findById(id)
+                .orElseThrow( () -> new UserNotFoundException("User could not be found by id:" + id));
     }
+
+    private UserInformation findUserByMail(String mail){
+        return userInformationRepository.findByMail(mail)
+                .orElseThrow( () -> new UserNotFoundException("User could not be found by mail:" + mail));
+    }
+
+
 }
