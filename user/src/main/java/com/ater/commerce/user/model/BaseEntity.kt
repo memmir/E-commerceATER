@@ -1,4 +1,4 @@
-package com.ater.user.model
+package com.ater.commerce.user.model
 
 import java.time.LocalDateTime
 

@@ -1,12 +1,12 @@
-package com.ater.user.service;
+package com.ater.commerce.user.service;
 
-import com.ater.user.dto.CreateUserRequest;
-import com.ater.user.dto.UpdateUserRequest;
-import com.ater.user.dto.UserDto;
-import com.ater.user.dto.UserDtoConverter;
-import com.ater.user.exception.UserNotFoundException;
-import com.ater.user.model.User;
-import com.ater.user.repository.UserRepository;
+import com.ater.commerce.user.dto.CreateUserRequest;
+import com.ater.commerce.user.dto.UpdateUserRequest;
+import com.ater.commerce.user.dto.UserDto;
+import com.ater.commerce.user.dto.UserDtoConverter;
+import com.ater.commerce.user.exception.UserNotFoundException;
+import com.ater.commerce.user.model.User;
+import com.ater.commerce.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

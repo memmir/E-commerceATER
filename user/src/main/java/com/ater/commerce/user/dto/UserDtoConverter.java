@@ -1,6 +1,6 @@
-package com.ater.user.dto;
+package com.ater.commerce.user.dto;
 
-import com.ater.user.model.User;
+import com.ater.commerce.user.model.User;
 import org.hibernate.annotations.Comments;
 import org.springframework.stereotype.Component;
 

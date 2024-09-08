@@ -1,4 +1,4 @@
-package com.ater.user.dto
+package com.ater.commerce.user.dto
 
 data class UpdateUserRequest(
 
