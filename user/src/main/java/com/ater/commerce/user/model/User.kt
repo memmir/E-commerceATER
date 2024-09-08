@@ -1,11 +1,9 @@
-package com.ater.user.model
+package com.ater.commerce.user.model
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.*
 
 @Entity
+@Table(name = "\"user\"")
 data class User(
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)
